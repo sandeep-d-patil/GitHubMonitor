@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub Events</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <h1> Events observed from GitHub API</h1>
+    <h1> Average time between pull requests of repository</h1>
+    <p> To view the average time between pull request of any repository, please enter the username and repository name.
+        (for example: Username: PyGithub, Repository: PyGithub)</p>
+    <form action="/data" method = "POST">
+        <p>Username <input type = "text" name = "Username" /></p>
+        <p>Repository <input type = "text" name = "Repository" /></p>
+        <p><input type = "submit" value = "Submit" /></p>
+    </form>
+    <h2> Total number of events grouped by event type for a given offset</h2>
+    <p> To view the total number of events grouped by event type for a given offset (in minutes), please enter the
+        offset value.(for example: 10) </p>
+    <form action="/data_event" method = "POST">
+        <p>Offset (in minutes) <input type = "number" name = "Offset" /></p>
+        <p><input type = "submit" value = "Submit" /></p>
+    </form>
+    <h2> Plot of <a href="https://api.github.com/events">GitHub events</a> from past 10 minutes</h2>
+    <div class="chart" id="jsonFormatGraph">
+        <script>
+            function drawPlotlyGraph(graphs){
+                Plotly.plot('jsonFormatGraph', graphs, {});
+            }
+            var graphs = {{ graphJSON | safe }};
+            drawPlotlyGraph(graphs)
+        </script>
+    </div>
+
+</body>
+</html>
